@@ -22,5 +22,7 @@ extension Color {
 }
 extension Color {
     static let grey1 = Color(hex: "241D2A")
+    static let keyword_bg = Color(hex:"211F1F")
+    static let keyword_purple = Color(hex:"7E3FBE")
 }
 
