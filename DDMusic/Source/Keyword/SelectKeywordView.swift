@@ -66,11 +66,21 @@ struct SelectKeywordView: View {
                     .font(.system(size: 38,weight: .bold))
                     .foregroundColor(.white)
                 KeywordFlowLayout(keywords: keyword, selectedIndex: $selected)
+                
+                Button  {
+                    
+                } label: {
+                    Text("다음으로")
+                        .font(.system(size: 14,weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.keyword_purple)
+                        .cornerRadius(12)
+                }
+                .frame(maxWidth: .infinity)
             }
             .padding(.horizontal, 20)
-            
-            
-
         }
     }
 }
@@ -78,14 +88,16 @@ struct KeywordFlowLayout: View {
     @State private var totalWidth = CGFloat.zero
     var keywords: [String]
     @Binding var selectedIndex : [String]
-
-    
     var body: some View {
-        VStack(alignment: .leading) {
-            GeometryReader { geometry in
-                self.generateContent(in: geometry)
+        
+        ScrollView(showsIndicators:false) {
+            VStack(alignment: .leading) {
+                GeometryReader { geometry in
+                    self.generateContent(in: geometry)
+                }
             }
         }
+        
     }
     private func generateContent(in g: GeometryProxy) -> some View {
         var width = CGFloat.zero
@@ -96,9 +108,13 @@ struct KeywordFlowLayout: View {
             ForEach(self.keywords.indices, id: \.self) { index in
                 KeywordButton(
                     label: self.keywords[index],
-                    isSelected: false,
+                    isSelected: selectedIndex.contains(self.keywords[index]),
                     action: {
-        
+                        if selectedIndex.contains(self.keywords[index]) {
+                            selectedIndex.remove(at: selectedIndex.firstIndex(of: self.keywords[index])!)
+                        } else {
+                            selectedIndex.append(self.keywords[index])
+                        }
                     }
                 )
                 .padding([.horizontal],4)

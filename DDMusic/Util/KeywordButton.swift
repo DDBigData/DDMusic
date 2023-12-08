@@ -20,8 +20,12 @@ struct KeywordButton: View {
                 .padding(.horizontal,16)
                 .padding(.vertical,12)
                 .frame(height:38)
-                .background(isSelected ? Color.keyword_bg : Color.keyword_purple) // 배경색 변경
-                .cornerRadius(36)
+                .background(isSelected ? Color.keyword_purple : Color.keyword_bg) // 배경색 변경
+                .cornerRadius(49)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 49)
+                        .stroke(isSelected ? Color.white : Color.keyword_purple)
+                )
         }
         
         
