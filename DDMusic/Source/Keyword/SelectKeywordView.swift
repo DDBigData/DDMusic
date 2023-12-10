@@ -55,6 +55,7 @@ struct SelectKeywordView: View {
         "#노래방",
         "#애창곡"
     ]
+    @Binding var hasSeen : Bool
     @State var selected : [String] = []
     var body: some View {
         ZStack {
@@ -68,7 +69,8 @@ struct SelectKeywordView: View {
                 KeywordFlowLayout(keywords: keyword, selectedIndex: $selected)
                 
                 Button  {
-                    
+                    hasSeen = true
+                    UserDefaults.standard.set(true, forKey: "HasSeenKeywordView")
                 } label: {
                     Text("다음으로")
                         .font(.system(size: 14,weight: .bold))
@@ -146,5 +148,5 @@ struct KeywordFlowLayout: View {
 }
 
 #Preview {
-    SelectKeywordView()
+    SelectKeywordView(hasSeen: .constant(false))
 }
