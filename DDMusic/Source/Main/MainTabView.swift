@@ -18,16 +18,16 @@ struct MainTabView: View {
                 switch selection {
                 case 0:
                     NavigationView {
-
+                        HomeView()
                     }
                     .navigationViewStyle(.stack)
                 case 1:
                     NavigationView {
-  
+                        MusicView()
                     }.navigationViewStyle(.stack)
                 default :
                     NavigationView {
-                  
+                        PlaylistView()
                     }.navigationViewStyle(.stack)
                 }
                 //}
