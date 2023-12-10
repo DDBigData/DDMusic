@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Song {
+struct Song:Hashable {
     var songId : String
     var title: String
     var artist: String
