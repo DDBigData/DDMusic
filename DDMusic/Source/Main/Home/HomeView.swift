@@ -27,7 +27,7 @@ struct HomeView: View {
                 )
                 VStack {
                     HStack {
-                        Text("반가워요!")
+                        Text("반가워요. SOM님!")
                             .font(.system(size: 25, weight: .semibold))
                             .foregroundColor(.white)
                         Spacer()
@@ -36,14 +36,19 @@ struct HomeView: View {
                     .padding(.top, 100)
                     VStack(spacing:14) {
                         HStack {
-                            Text("Enjoy your mood")
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundColor(.white)
+                            VStack(alignment: .leading,spacing: 6) {
+                                Text("Enjoy your mood")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(.white)
+                                Text("당신의 분위기와 어울리는 노래")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(.white)
+                            }
                             Spacer()
                         }
                         
                         ScrollView(.horizontal,showsIndicators:false) {
-                            NavigationLink(destination: PlaylistDetailView(title: $title, image: $image), isActive: $isActive) {
+                            NavigationLink(destination: PlaylistDetailView(title: $title, image: $image, isActive: $isActive, type:.initial), isActive: $isActive) {
                                 VStack(spacing:10) {
                                     Rectangle()
                                         .foregroundColor(.clear)
@@ -70,6 +75,7 @@ struct HomeView: View {
                         }
                     }
                     .padding(.top, 20)
+                    
                     VStack(spacing:14) {
                         HStack {
                             Text("Recommended")
@@ -80,17 +86,53 @@ struct HomeView: View {
                         
                         ScrollView(.horizontal, showsIndicators:false) {
                             HStack(spacing:22) {
-                                VStack(spacing:10) {
-                                    Image("image_playlist_cover")
-                                    Text("This is Ed")
-                                        .font(.system(size: 12, weight: .medium))
-                                        .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                NavigationLink(destination: PlaylistDetailView(title: $title, image: $image, isActive: $isActive, type:.songsentence), isActive: $isActive) {
+                                    VStack(spacing:10) {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 152, height: 149)
+                                            .background(
+                                                Image("songsentence_cover_image")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 152, height: 149)
+                                                    .clipped()
+                                            )
+                                            .cornerRadius(5)
+                                        
+                                        Text("감성힙합으로 마음을 위로해보세요")
+                                            .font(.system(size: 12, weight: .medium))
+                                            .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                    }
+                                    .onTapGesture {
+                                        title = "감성힙합으로 마음을 위로해보세요"
+                                        image = Image("songsentence_cover_image")
+                                        isActive = true
+                                    }
                                 }
-                                VStack(spacing:10) {
-                                    Image("image_playlist_cover")
-                                    Text("This is Ed")
-                                        .font(.system(size: 12, weight: .medium))
-                                        .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                NavigationLink(destination: PlaylistDetailView(title: $title, image: $image, isActive: $isActive, type:.lyric), isActive: $isActive) {
+                                    VStack(spacing:10) {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 152, height: 149)
+                                            .background(
+                                                Image("lyric_cover_image")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 152, height: 149)
+                                                    .clipped()
+                                            )
+                                            .cornerRadius(5)
+                                        
+                                        Text("위로를 전하는 감성의 노래")
+                                            .font(.system(size: 12, weight: .medium))
+                                            .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                    }
+                                    .onTapGesture {
+                                        title = "위로를 전하는 감성의 노래"
+                                        image = Image("lyric_cover_image")
+                                        isActive = true
+                                    }
                                 }
                                 VStack(spacing:10) {
                                     Image("image_playlist_cover")
@@ -103,11 +145,12 @@ struct HomeView: View {
                         
                     }
                     .padding(.top, 20)
+                     
                     Spacer()
                 }
                 .padding(.horizontal, 20)
                 .onAppear {
-                    viewModel.loadCsvFile()
+                    viewModel.loadCsvFile(type: .initial)
                 }
             }
             .frame(maxWidth: .infinity,maxHeight: .infinity)

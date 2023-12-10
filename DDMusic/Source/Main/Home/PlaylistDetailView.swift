@@ -14,6 +14,8 @@ struct PlaylistDetailView: View {
     @StateObject var viewModel = HomeViewModel()
     @Binding var title : String
     @Binding var image : Image
+    @Binding var isActive : Bool
+    @State var type : RecommendationType? = nil
     var body: some View {
         ZStack {
             Color.grey1
@@ -27,6 +29,18 @@ struct PlaylistDetailView: View {
                 endPoint: UnitPoint(x: 1, y: 1)
             )
             VStack {
+                ZStack {
+                    HStack {
+                        Image("back")
+                            .onTapGesture {
+                                self.isActive = false
+                            }
+                        Spacer()
+                    }
+                    Text("\(title)")
+                        .font(.system(size: 18,weight: .bold))
+                        .foregroundColor(.white)
+                }
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -75,19 +89,21 @@ struct PlaylistDetailView: View {
                 }
 
             }
-            .padding(.top, 110)
+            .padding(.top, 60)
             .padding(.horizontal,20)
+            .padding(.bottom,100)
             .onAppear {
-                viewModel.loadCsvFile()
+                if let type = type {
+                    viewModel.loadCsvFile(type: type)
+                }
             }
-            
         }
         .frame(maxWidth: .infinity,maxHeight: .infinity)
         .ignoresSafeArea()
-        .navigationTitle("\(title)")
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    PlaylistDetailView(title: .constant("title"), image: .constant(Image("initial_cover_image")))
+    PlaylistDetailView(title: .constant("title"), image: .constant(Image("initial_cover_image")), isActive: .constant(true))
 }
