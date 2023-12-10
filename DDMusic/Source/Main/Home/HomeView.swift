@@ -47,6 +47,39 @@ struct HomeView: View {
                     }
                 }
                 .padding(.top, 20)
+                VStack(spacing:14) {
+                    HStack {
+                        Text("Recommended")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    
+                    ScrollView(.horizontal, showsIndicators:false) {
+                        HStack(spacing:22) {
+                            VStack(spacing:10) {
+                                Image("image_playlist_cover")
+                                Text("This is Ed")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                            }
+                            VStack(spacing:10) {
+                                Image("image_playlist_cover")
+                                Text("This is Ed")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                            }
+                            VStack(spacing:10) {
+                                Image("image_playlist_cover")
+                                Text("This is Ed")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                            }
+                        }
+                    }
+                    
+                }
+                .padding(.top, 20)
                 Spacer()
             }
             .padding(.horizontal, 20)
