@@ -9,9 +9,15 @@ import SwiftUI
 
 struct SplashScreen: View {
     @State private var isActive = false
+    @State private var hasSeenKeywordView: Bool = UserDefaults.standard.bool(forKey: "HasSeenKeywordView")
     var body: some View {
         if isActive {
-
+            if !hasSeenKeywordView {
+                SelectKeywordView()
+            } else {
+                
+            }
+            
         } else {
             ZStack {
                 Image("splash_bg")
