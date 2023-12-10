@@ -123,7 +123,6 @@ struct HomeView: View {
                                                     .clipped()
                                             )
                                             .cornerRadius(5)
-                                        
                                         Text("위로를 전하는 감성의 노래")
                                             .font(.system(size: 12, weight: .medium))
                                             .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
@@ -134,11 +133,28 @@ struct HomeView: View {
                                         isActive = true
                                     }
                                 }
-                                VStack(spacing:10) {
-                                    Image("image_playlist_cover")
-                                    Text("This is Ed")
-                                        .font(.system(size: 12, weight: .medium))
-                                        .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                NavigationLink(destination: PlaylistDetailView(title: $title, image: $image, isActive: $isActive, type:.audio), isActive: $isActive) {
+                                    VStack(spacing:10) {
+                                        Rectangle()
+                                            .foregroundColor(.clear)
+                                            .frame(width: 152, height: 149)
+                                            .background(
+                                                Image("audio_cover_image")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .frame(width: 152, height: 149)
+                                                    .clipped()
+                                            )
+                                            .cornerRadius(5)
+                                        Text("열정을 불태워보세요")
+                                            .font(.system(size: 12, weight: .medium))
+                                            .foregroundColor(Color(red: 0.59, green: 0.55, blue: 0.55))
+                                    }
+                                    .onTapGesture {
+                                        title = "열정을 불태워보세요"
+                                        image = Image("audio_cover_image")
+                                        isActive = true
+                                    }
                                 }
                             }
                         }

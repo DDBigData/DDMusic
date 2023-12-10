@@ -93,7 +93,12 @@ struct PlaylistDetailView: View {
             .padding(.horizontal,20)
             .padding(.bottom,100)
             .onAppear {
-                if let type = type {
+                if let type = self.type {
+                    viewModel.loadCsvFile(type: type)
+                }
+            }
+            .onChange(of: type) { newValue in
+                if let type = newValue {
                     viewModel.loadCsvFile(type: type)
                 }
             }

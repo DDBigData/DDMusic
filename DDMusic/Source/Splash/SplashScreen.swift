@@ -13,9 +13,9 @@ struct SplashScreen: View {
     var body: some View {
         if isActive {
             if !hasSeenKeywordView {
-                SelectKeywordView()
+                SelectKeywordView(hasSeen: $hasSeenKeywordView)
             } else {
-                
+                MainTabView()
             }
             
         } else {
