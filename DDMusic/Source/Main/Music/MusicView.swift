@@ -75,7 +75,12 @@ struct MusicView: View {
                                         .foregroundColor(Color(red: 0.85, green: 0.85, blue: 0.85))
                                 }
                                 Spacer()
-                                Image("icon_heart")
+                    
+                                if viewModel.playlistSongIDs.contains(song.songId) {
+                                    Image("icon_heart_filled")
+                                } else {
+                                    Image("icon_heart")
+                                }
                             }
                         }
                     }
