@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PlaylistView: View {
+    @StateObject var viewModel = PlaylistViewModel()
     var body: some View {
         ZStack {
             Color.grey1
@@ -30,59 +32,53 @@ struct PlaylistView: View {
                 }
                 .padding(.bottom,20)
                 VStack(spacing:16) {
-                    HStack(spacing:16) {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 69, height: 62)
-                            .background(
-                                //Image("PATH_TO_IMAGE")
-                                //.resizable()
-                                //.aspectRatio(contentMode: .fill)
-                                Color.white
+                    ScrollView(showsIndicators:false) {
+                        ForEach(viewModel.songs, id:\.self) { song in
+                            HStack(spacing:16) {
+                                Rectangle()
+                                    .foregroundColor(.clear)
                                     .frame(width: 69, height: 62)
-                                    .clipped()
-                            )
-                            .cornerRadius(5)
-                        VStack(alignment: .leading,spacing:5) {
-                            Text("Those Eyes")
-                                .font(.system(size: 15,weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("New west")
-                                .font(.system(size: 13,weight: .light))
-                                .foregroundColor(Color(red: 0.85, green: 0.85, blue: 0.85))
+                                    .background(
+                                        KFImage(URL(string : song.album))
+                                            .placeholder {
+                                                Color.white
+                                                    .frame(width: 69, height: 62)
+                                                    .clipped()
+                                            }.retry(maxCount: 3, interval: .seconds(5)) //재시도
+                                            .onSuccess { success in //성공
+                                                print("success: \(success)")
+                                            }
+                                            .onFailure { error in //실패
+                                                print("failure: \(error)")
+                                            }
+
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 69, height: 62)
+                                        .clipped()
+                                    )
+                                    .cornerRadius(5)
+                                VStack(alignment: .leading,spacing:5) {
+                                    Text("\(song.title)")
+                                        .font(.system(size: 15,weight: .semibold))
+                                        .foregroundColor(.white)
+                                    Text("\(song.artist)")
+                                        .font(.system(size: 13,weight: .light))
+                                        .foregroundColor(Color(red: 0.85, green: 0.85, blue: 0.85))
+                                }
+                                Spacer()
+                                Image("icon_heart_filled")
+                            }
                         }
-                        Spacer()
-                        Image("icon_heart_filled")
-                    }
-                    HStack(spacing:16) {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 69, height: 62)
-                            .background(
-                                //Image("PATH_TO_IMAGE")
-                                //.resizable()
-                                //.aspectRatio(contentMode: .fill)
-                                Color.white
-                                    .frame(width: 69, height: 62)
-                                    .clipped()
-                            )
-                            .cornerRadius(5)
-                        VStack(alignment: .leading,spacing:5) {
-                            Text("Those Eyes")
-                                .font(.system(size: 15,weight: .semibold))
-                                .foregroundColor(.white)
-                            Text("New west")
-                                .font(.system(size: 13,weight: .light))
-                                .foregroundColor(Color(red: 0.85, green: 0.85, blue: 0.85))
-                        }
-                        Spacer()
-                        Image("icon_heart_filled")
                     }
                 }
                 Spacer()
             }
             .padding(.top,100)
             .padding(.horizontal,20)
+            .onAppear {
+                viewModel.loadCsvFile()
+            }
         }
         .frame(maxWidth: .infinity,maxHeight: .infinity)
         .ignoresSafeArea()
