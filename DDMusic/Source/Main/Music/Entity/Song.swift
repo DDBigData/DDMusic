@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct Song {
+    var songId : String
+    var title: String
+    var artist: String
+    var album: String
+    // 여기에 필요한 다른 필드 추가
+}

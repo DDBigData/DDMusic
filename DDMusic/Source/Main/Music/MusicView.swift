@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MusicView: View {
+    var viewModel = MusicViewModel()
+    
     var body: some View {
         ZStack {
             Color.grey1
@@ -90,9 +92,13 @@ struct MusicView: View {
             }
             .padding(.top,100)
             .padding(.horizontal,20)
+            .onAppear {
+                viewModel.loadCsvFile()
+            }
         }
         .frame(maxWidth: .infinity,maxHeight: .infinity)
         .ignoresSafeArea()
+        
 
     }
 }
